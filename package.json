@@ -1,0 +1,14 @@
+{
+    "name": "LovelyLandscape",
+    "description": "LovelyLandscape on Node.js",
+    "version": "0.8.0",
+    "private": true,
+    "dependencies": {
+        "express": "4.x",
+        "cfenv": "0.2.x",
+        "mongodb": "*",
+        "mongoose": "*",
+        "request": "*",
+        "cheerio": "*"
+    }
+}

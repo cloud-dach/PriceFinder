@@ -1,10 +1,11 @@
 ---
 applications:
-- name: PriceFinderDemo
-  buildpack: https://github.com/joshuamckenty/heroku-buildpack-python
-  memory: 256M
+- name: PriceFinder-Node.js
+  framework: node
+  runtime: node08
+  mem: 64M
   instances: 1
-  url: PriceFinderDemo${random-word}.${target-base}
-  host: PriceFinderDemo-${random-word}
-  path: .
-  command: python wsgi.py
+  command: node app.js    #The command to use to start the application
+  host: PriceFinder-${random-word}
+  domain: mybluemix.net
+  path: .   

@@ -1,1 +1,4 @@
 "Rakefile" 
+node_modules/*
+.project
+.settings/*
