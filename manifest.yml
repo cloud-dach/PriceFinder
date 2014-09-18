@@ -1,0 +1,10 @@
+---
+applications:
+- name: PriceFinderDemo
+  buildpack: https://github.com/joshuamckenty/heroku-buildpack-python
+  memory: 256M
+  instances: 1
+  url: PriceFinderDemo${random-word}.${target-base}
+  host: PriceFinderDemo-${random-word}
+  path: .
+  command: python wsgi.py
