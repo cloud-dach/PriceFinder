@@ -13,8 +13,10 @@ try {
 catch(err) {
 }
 var mongo = ""
-  var port = 3000;
+var port = 3000;
 var host = "localhost";
+var twilioSid = "";
+var twilioToken = "";
 if (cfenv) {
   var appEnv = cfenv.getAppEnv();
 
@@ -25,6 +27,18 @@ if (cfenv) {
     if (mongoService) {
       var mongo = mongoService.credentials;
     }
+  }
+  
+  // twilio
+  if (appEnv.services && appEnv.services['user-provided']) {
+    var userProvided = appEnv.services['user-provided'];
+    userProvided.forEach(function(service) {
+      if (service.name.indexOf('Twilio') == 0) {
+        twilioSid = service.credentials.accountSID;
+        twilioToken = service.credentials.authToken;
+        console.log(twilioSid);
+      }
+    });
   }
 
   port = appEnv.port;
@@ -51,6 +65,8 @@ mongoose.connect(mongo.uri, function(err) {
 //Make some objects accessible to our router
 app.use(function(req,res,next){
   req.dberror = dberror;
+  req.twilioSid = twilioSid;
+  req.twilioToken = twilioToken;
   next();
 });
 

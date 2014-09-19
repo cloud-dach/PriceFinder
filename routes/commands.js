@@ -4,6 +4,7 @@ var Prices = require('../js/database.js');
 var request = require("request");
 var cheerio = require("cheerio");
 var async = require("async");
+var twilio = require("twilio");
 
 //invoked for any requests passed to this router
 router.use(function(req, res, next) {
@@ -13,6 +14,7 @@ router.use(function(req, res, next) {
   else
     next();
 });
+
 
 //add an item to the watch list
 router.get('/additem', function(req, res) {
@@ -78,8 +80,21 @@ router.get('/getprices', function(req, res) {
     }, function(err){
       if (someError)
         return res.redirect("/views/currentPriceError.html");
-      else
+      else {
+        var client = new twilio.RestClient(req.twilioSid, req.twilioToken);
+        
+        client.sendMessage({
+            to:'number',
+            from:'number',
+            body:'congrats, prices were updated'
+        }, function(err, message) {
+          if (err)
+            console.log('error sending message');
+          else
+            console.log('Message sent! ID: '+message.sid);
+        });
         return res.redirect("/views/currentPrice.html");
+      }
     });
   });
 });

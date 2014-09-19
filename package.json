@@ -10,6 +10,7 @@
         "mongoose": "*",
         "request": "*",
         "cheerio": "*",
-        "async": "*"
+        "async": "*",
+        "twilio": "*"
     }
 }
