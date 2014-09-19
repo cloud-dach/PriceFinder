@@ -9,6 +9,7 @@
         "mongodb": "*",
         "mongoose": "*",
         "request": "*",
-        "cheerio": "*"
+        "cheerio": "*",
+        "async": "*"
     }
 }

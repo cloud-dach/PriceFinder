@@ -3,11 +3,15 @@ var router = express.Router();
 var Prices = require('../js/database.js');
 var request = require("request");
 var cheerio = require("cheerio");
+var async = require("async");
 
 //invoked for any requests passed to this router
 router.use(function(req, res, next) {
   // .. some logic here .. like any other middleware
-  next();
+  if (req.dberror)
+    return res.redirect("/views/currentPriceError.html");
+  else
+    next();
 });
 
 //add an item to the watch list
@@ -37,28 +41,46 @@ router.get('/getitems', function(req, res) {
 //lookup prices
 router.get('/getprices', function(req, res) {
   Prices.find(function(err, items){
-    for(i=0; i<items.length; i++){
-      var last = (i===items.length-1);
+    var someError = false;
+    async.eachSeries(items, function( item, cb) {
       request({
-        uri: items[i].url,
+        uri: item.url,
       }, function(error, response, body) {
         if (!error){
           var $ = cheerio.load(body);
           var price = $('#price').text();
           if (price) {
-            this.item.price = price;
-            this.item.save(function (err) {
-              if (err){	
+            item.price = price;
+            item.save(function (err) {
+              if (err){ 
                 console.log('Error item ', err);
+                someError = true;
+                cb();
               }
-            });	
+              else {
+                console.log("saved price");
+                cb();
+              }
+            });
           }
-          if (this.finish === true) {
-            return res.redirect("/views/currentPrice.html");
+          else {
+            console.log("no price tag");
+            someError = true;
+            cb();
           }
         }
-      }.bind({item:items[i], finish:last}));
-    }
+        else {
+          console.log("failed loading url");
+          someError = true;
+          cb();
+        }
+      });
+    }, function(err){
+      if (someError)
+        return res.redirect("/views/currentPriceError.html");
+      else
+        return res.redirect("/views/currentPrice.html");
+    });
   });
 });
 

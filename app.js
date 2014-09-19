@@ -32,6 +32,7 @@ if (cfenv) {
 }
 
 //connect to database
+var dberror = false;
 if (mongo == "") { 
   mongo = {
       "username" : "user1",
@@ -42,7 +43,15 @@ if (mongo == "") {
 mongoose.connect(mongo.uri, function(err) {
   if (err) {
     console.log("connect to mongodb failed");
+    dberror = true;
   };
+});
+
+
+//Make some objects accessible to our router
+app.use(function(req,res,next){
+  req.dberror = dberror;
+  next();
 });
 
 //application context
