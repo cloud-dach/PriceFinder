@@ -20,6 +20,7 @@ var twilioToken = "";
 if (cfenv) {
   var appEnv = cfenv.getAppEnv();
 
+/*
   //  setup database
   if (appEnv.services && appEnv.services['mongolab']) {
     var mongoService = appEnv.services['mongolab'][0];
@@ -28,6 +29,7 @@ if (cfenv) {
       var mongo = mongoService.credentials;
     }
   }
+*/
   
   // twilio
   if (appEnv.services && appEnv.services['user-provided']) {
