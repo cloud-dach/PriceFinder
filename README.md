@@ -8,7 +8,7 @@ This application is a Price Finder. It connects to online stores, get informatio
 		
 ## For more info ##
 
-This is a Python app that uses the [Bottle framework](http://bottlepy.org/docs/dev/) and the following services:
+This is a Node app that uses the following services:
 
 - MongoDB database (from MongoLab)
 - Twilio for text messaging (SMS)
