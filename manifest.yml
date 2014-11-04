@@ -1,9 +1,9 @@
 ---
 applications:
 - name: PriceFinder-Node.js
+  memory: 64MB
   framework: node
   runtime: node08
-  mem: 64M
   instances: 1
   command: node app.js    #The command to use to start the application
   host: PriceFinder-${random-word}
