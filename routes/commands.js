@@ -81,19 +81,25 @@ router.get('/getprices', function(req, res) {
       if (someError)
         return res.redirect("/views/currentPriceError.html");
       else {
-        var client = new twilio.RestClient(req.twilioSid, req.twilioToken);
-        
-        client.sendMessage({
-            to:'number',
-            from:'number',
-            body:'congrats, prices were updated'
-        }, function(err, message) {
-          if (err)
-            console.log('error sending message');
-          else
-            console.log('Message sent! ID: '+message.sid);
-        });
-        return res.redirect("/views/currentPrice.html");
+    	  
+    	  try {
+    		  var client = new twilio.RestClient(req.twilioSid, req.twilioToken);
+
+    		  client.sendMessage({
+    			  to:'number',
+    			  from:'number',
+    			  body:'congrats, prices were updated'
+    		  }, function(err, message) {
+    			  if (err)
+    				  console.log('error sending message');
+    			  else
+    				  console.log('Message sent! ID: '+message.sid);
+    		  });
+    		  return res.redirect("/views/currentPrice.html");
+    	  }
+    	  catch(err) {
+    		  return res.redirect("/views/displayall.html");
+    	  }
       }
     });
   });
