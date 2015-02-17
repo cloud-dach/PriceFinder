@@ -1,7 +1,6 @@
+
 //required modules
 var express = require("express");
-var mongoose = require('mongoose');
-
 //create application
 var app = express();
 
@@ -12,24 +11,21 @@ try {
 }
 catch(err) {
 }
-var mongo = ""
+
+var db = require('./js/cloudantdb.js');
+
 var port = 3000;
 var host = "localhost";
+
 var twilioSid = "";
 var twilioToken = "";
+
 if (cfenv) {
   var appEnv = cfenv.getAppEnv();
-
-/*
   //  setup database
-  if (appEnv.services && appEnv.services['mongolab']) {
-    var mongoService = appEnv.services['mongolab'][0];
-    console.log(mongoService);
-    if (mongoService) {
-      var mongo = mongoService.credentials;
-    }
+  if (appEnv.services && appEnv.services['cloudantNoSQLDB']) {
+	  db.initDBConnection();
   }
-*/
   
   // twilio
   if (appEnv.services && appEnv.services['user-provided']) {
@@ -46,29 +42,17 @@ if (cfenv) {
   port = appEnv.port;
   host = appEnv.host;
 }
-
-//connect to database
-var dberror = false;
-if (mongo == "") { 
-  mongo = {
-      "username" : "user1",
-      "password" : "secret",
-      "uri" : "mongodb://localhost:27017/pricefinder"
-  };
+else
+{
+	db.initLocalConnection();	
 }
-mongoose.connect(mongo.uri, function(err) {
-  if (err) {
-    console.log("connect to mongodb failed");
-    dberror = true;
-  };
-});
-
 
 //Make some objects accessible to our router
 app.use(function(req,res,next){
-  req.dberror = dberror;
+  //req.dberror = dberror;
   req.twilioSid = twilioSid;
   req.twilioToken = twilioToken;
+  req.db = db;
   next();
 });
 

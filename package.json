@@ -6,11 +6,10 @@
     "dependencies": {
         "express": "4.x",
         "cfenv": "0.2.x",
-        "mongodb": "*",
-        "mongoose": "*",
         "request": "*",
         "cheerio": "*",
         "async": "*",
-        "twilio": "*"
+        "twilio": "*",
+        "cloudant": "*"	
     }
 }

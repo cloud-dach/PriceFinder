@@ -21,9 +21,9 @@ function FillTable() {
     	var items = data;
     	$('#itemcount').text(items.length);
     	for (var i=0; i < items.length; i++) {
-    		$("#itemtable").append("<tr><td>" + items[i]._id + "</td>" +
+    		$("#itemtable").append("<tr><td>" + items[i].name + "</td>" +
 									   "<td>" + items[i].url + "</td>" +
-									   "<td>" + items[i].idtag + "</td>" +
+									   "<td>" + items[i]._id + "</td>" +
 									   "<td>" + items[i].price + "</td>" +
 									 "</tr>");
     	}

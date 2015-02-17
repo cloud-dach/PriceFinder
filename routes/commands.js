@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
-var Prices = require('../js/database.js');
 var request = require("request");
 var cheerio = require("cheerio");
 var async = require("async");
 var twilio = require("twilio");
-
+var db;
 //invoked for any requests passed to this router
 router.use(function(req, res, next) {
   // .. some logic here .. like any other middleware
+  db = req.db;
   if (req.dberror)
     return res.redirect("/views/currentPriceError.html");
   else
@@ -20,9 +20,9 @@ router.use(function(req, res, next) {
 router.get('/additem', function(req, res) {
   var name = req.query.Name;
   var url = req.query.Url;
-  var item = new Prices({_id:name, url:url, idtag:"price"});
-  item.save(function (err) {
-    if (err){	
+  var item = new db.PriceFinderItem(name,url,null);
+ 
+ db.saveItem(item,function (err) { if (err){	
       console.log('Error item ', err);
       res.send(err);
     }
@@ -35,25 +35,26 @@ router.get('/additem', function(req, res) {
 
 //get all items
 router.get('/getitems', function(req, res) {
-  Prices.find(function(err, items){
+  db.loadItems(function(items,err){
     res.send(items); 
   });
 });
 
 //lookup prices
 router.get('/getprices', function(req, res) {
-  Prices.find(function(err, items){
+	db.loadItems(function(items,err){
     var someError = false;
     async.eachSeries(items, function( item, cb) {
       request({
         uri: item.url,
       }, function(error, response, body) {
         if (!error){
+          console.log(body);	
           var $ = cheerio.load(body);
           var price = $('#price').text();
           if (price) {
             item.price = price;
-            item.save(function (err) {
+            db.updateItemPrice(item, item._id, function (err, res) {
               if (err){ 
                 console.log('Error item ', err);
                 someError = true;
@@ -81,9 +82,8 @@ router.get('/getprices', function(req, res) {
       if (someError)
         return res.redirect("/views/currentPriceError.html");
       else {
-    	  
-    	  try {
-    		  var client = new twilio.RestClient(req.twilioSid, req.twilioToken);
+    	
+    	  try {    		  var client = new twilio.RestClient(req.twilioSid, req.twilioToken);
 
     		  client.sendMessage({
     			  to:'number',

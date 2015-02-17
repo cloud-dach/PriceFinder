@@ -1,6 +1,6 @@
 ---
 applications:
-- name: PriceFinder-Node.js
+- name: PriceFinder-Node
   memory: 64MB
   framework: node
   runtime: node08
