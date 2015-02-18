@@ -40,6 +40,13 @@ router.get('/getitems', function(req, res) {
   });
 });
 
+//delete all items
+router.get('/clearall', function(req, res) {
+	db.deleteAllItems(function(err){
+	res.redirect("/views/displayall.html");
+  });
+});
+
 //lookup prices
 router.get('/getprices', function(req, res) {
 	db.loadItems(function(items,err){
@@ -104,5 +111,9 @@ router.get('/getprices', function(req, res) {
     });
   });
 });
+
+
+
+
 
 module.exports = router;

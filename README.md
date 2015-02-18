@@ -10,5 +10,5 @@ This application is a Price Finder. It connects to online stores, get informatio
 
 This is a Node app that uses the following services:
 
-- MongoDB database (from MongoLab)
+- Cloudant DB
 - Twilio for text messaging (SMS)
