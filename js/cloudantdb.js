@@ -91,8 +91,7 @@ var updateItemPrice = function(obj, key, callback) {
 var deleteAllItems = function(callback){
 	db.list({include_docs:true}, function(err,body){
 		if (!err) {
-		    var items = [];
-			body.rows.forEach(function(doc) {
+		    body.rows.forEach(function(doc) {
 				console.log('deleting id: %s, rev: %s', doc.id, doc.value.rev)
 				db.destroy(doc.id, doc.value.rev, function(er, body){
 				if (er) console.log('ERROR: %s', er);
