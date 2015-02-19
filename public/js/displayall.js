@@ -6,6 +6,14 @@
         AddItem();
     });
 
+    $("#GetPriceButton").on( 'click', function( event ) {
+        GetPrices();
+    });
+    
+    $("#DeleteButton").on( 'click', function( event ) {
+        DeleteAll();
+    });
+    
     $(document).ready(function($){ 
         FillTable();
     });
@@ -28,5 +36,20 @@ function FillTable() {
 									 "</tr>");
     	}
     });
+}
 
+function GetPrices() {
+    var ctx = window.location.pathname;
+    ctx = ctx.substring(0, ctx.lastIndexOf("/"));
+    ctx = ctx.substring(0, ctx.lastIndexOf("/") + 1);
+    var url = ctx + "commands/getprices";
+    window.location = url;
+}
+
+function DeleteAll() {
+    var ctx = window.location.pathname;
+    ctx = ctx.substring(0, ctx.lastIndexOf("/"));
+    ctx = ctx.substring(0, ctx.lastIndexOf("/") + 1);
+    var url = ctx + "commands/clearall";
+    window.location = url;
 }

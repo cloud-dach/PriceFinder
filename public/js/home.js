@@ -19,5 +19,9 @@ function AddItem() {
     console.log("test: ", url);
     $.get( url, { Name:ItemName, Url:ItemUrl} , function( data ){
     	console.log(data);
-    });
+      alert("item added");
+    })
+      .fail(function() {
+        alert("could not add item")
+      });
 }

@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-    <link href="/static/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="/static/bootstrap-responsive.css" rel="stylesheet">
-    <link href="/static/bootstrap.css" rel="stylesheet">
+    <link href="../static/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="../static/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../static/bootstrap.css" rel="stylesheet">
 
     <style type="text/css">
 	body {
@@ -66,7 +66,7 @@
       <div class="navbar-inner">
         <div class="container">
           
-          <a class="brand pull-left" href="/"><em>Price Finder </em><small>v3.0</small> - Back to Home Page</a>
+          <a class="brand pull-left" href="../index.html"><em>Price Finder </em><small>v3.0</small> - Back to Home Page</a>
 	  
           <div class="nav-collapse collapse">
 
@@ -84,18 +84,23 @@
   <h4>Record count: <span id="itemcount">0</span></h4>
   <div style="background-color:white">
   	<table id="itemtable" class="table table-hover">
-  	<tr>
-  	<td>Name</td><td>Url</td><td>Price field id</td><td>Current Price</td><td> </td>
-  	</tr>
+  	  <tr>
+  	    <td>Name</td><td>Url</td><td>Price field id</td><td>Current Price</td><td> </td>
+  	  </tr>
   	</table>
   </div>
-  	<br>
+  <br>
   <div style="text-align:center">
   	<!-- </form> -->
   	<p style="text-align:center">
-  		<form action="/commands/clearall" method="get">
-  		<input type="submit" value="Delete All Records" class="btn btn-danger">
-  		</form>
+      <tr>
+			  <td>
+          <input id="GetPriceButton" type="submit" value="Get Prices" class="btn btn-info">
+			  </td>
+			  <td>
+          <input id="DeleteButton" type="submit" value="Delete All Records" class="btn btn-danger">
+			  </td>
+		  </tr>
 	</p>
 	 
   </div>
@@ -104,7 +109,7 @@
   </div> <!-- end of the container-->
 
   <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script src="/js/displayall.js"></script>
+  <script src="../js/displayall.js"></script>
 
 </body>
 </html>
