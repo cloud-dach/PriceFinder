@@ -24,7 +24,7 @@ if (cfenv) {
   var appEnv = cfenv.getAppEnv();
   //  setup database
   if (appEnv.services && appEnv.services['cloudantNoSQLDB']) {
-	  db.initDBConnection();
+	  //db.initDBConnection();
   }
   
   // twilio
@@ -44,7 +44,7 @@ if (cfenv) {
 }
 else
 {
-	db.initLocalConnection();	
+	//db.initLocalConnection();	
 }
 
 //Make some objects accessible to our router
