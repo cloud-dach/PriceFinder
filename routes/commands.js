@@ -20,7 +20,7 @@ router.use(function(req, res, next) {
 router.get('/additem', function(req, res) {
   var name = req.query.Name;
   var url = req.query.Url;
-  var item = new db.PriceFinderItem(name,url,null);
+  var item = new db.PriceFinderItem(name,url,'#price',null);
  
  db.saveItem(item,function (err) { if (err){	
       console.log('Error item ', err);
@@ -58,7 +58,7 @@ router.get('/getprices', function(req, res) {
         if (!error){
           console.log(body);	
           var $ = cheerio.load(body);
-          var price = $('#price').text();
+          var price = $(item.pricetag).text();
           if (price) {
             item.price = price;
             db.updateItemPrice(item, item._id, function (err, res) {

@@ -31,7 +31,7 @@ function FillTable() {
     	for (var i=0; i < items.length; i++) {
     		$("#itemtable").append("<tr><td>" + items[i].name + "</td>" +
 									   "<td>" + items[i].url + "</td>" +
-									   "<td>" + items[i]._id + "</td>" +
+									   "<td>" + items[i].pricetag + "</td>" +
 									   "<td>" + items[i].price + "</td>" +
 									 "</tr>");
     	}

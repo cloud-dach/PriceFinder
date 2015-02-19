@@ -9,9 +9,10 @@ var dbCredentials = {
 	};
 var db;
 
-var PriceFinderItem = function(name, url, price) {
+var PriceFinderItem = function(name, url, pricetag, price) {
 	  this.name = name;
 	  this.url = url;
+	  this.pricetag = pricetag;
 	  this.price = price;
 };
 
@@ -59,6 +60,7 @@ var saveItem = function(item, response) {
 	db.insert({
 		name : item.name,
 		url : item.url,
+		pricetag: item.pricetag,
 		price : item.price 
 	}, function(err, doc) {
 		if(err) {
