@@ -7,5 +7,5 @@ applications:
   instances: 1
   command: node app.js    #The command to use to start the application
   host: PriceFinder-${random-word}
-  domain: mybluemix.net
+  domain: eu-gb.mybluemix.net
   path: .   
