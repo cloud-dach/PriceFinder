@@ -3,6 +3,7 @@
 var express = require("express");
 //create application
 var app = express();
+var cloudantSvcName= 'cloudantNoSQLDB';
 
 //get the core cfenv application environment
 var cfenv = null;
@@ -10,6 +11,7 @@ try {
   cfenv = require('cfenv');
 }
 catch(err) {
+    console.log('No CF Environment running locally!');
 }
 
 var db = require('./js/cloudantdb.js');
@@ -23,8 +25,17 @@ var twilioToken = "";
 if (cfenv) {
   var appEnv = cfenv.getAppEnv();
   //  setup database
-  if (appEnv.services && appEnv.services['cloudantNoSQLDB']) {
-	  //db.initDBConnection();
+  if (appEnv.services && appEnv.services[cloudantSvcName]) {
+      
+      var service = appEnv.services[cloudantSvcName];
+      var url = service[0].credentials.url;
+      console.log(url);
+      db.initDBConnection(url);
+  }
+  else
+  {
+      console.log('No Cloudant Service in Env ' + cloudantSvcName);
+      console.log('You must bind Cloudant Service to that application on Bluemix!');
   }
   
   // twilio
@@ -44,7 +55,9 @@ if (cfenv) {
 }
 else
 {
-	//db.initLocalConnection();	
+    console.log('Try direct connection to Cloudant DB');
+    var url = 'https://de8fd9c9-f5fc-4d91-86ac-4947783453f0-bluemix:c1f9266c89ff1bb2893b8d33463b58a82f3be09bec47da0558f656d47c48f8a8@de8fd9c9-f5fc-4d91-86ac-4947783453f0-bluemix.cloudant.com'
+    db.initDBConnection(url);	
 }
 
 //Make some objects accessible to our router

@@ -16,34 +16,8 @@ var PriceFinderItem = function(name, url, pricetag, price) {
     this.price = price;
 };
 
-function initDBConnection() {
-    if (process.env.VCAP_SERVICES) {
-        var vcapServices = JSON.parse(process.env.VCAP_SERVICES);
-        if (vcapServices.cloudantNoSQLDB) {
-            dbCredentials.host = vcapServices.cloudantNoSQLDB[0].credentials.host;
-            dbCredentials.port = vcapServices.cloudantNoSQLDB[0].credentials.port;
-            dbCredentials.user = vcapServices.cloudantNoSQLDB[0].credentials.username;
-            dbCredentials.password = vcapServices.cloudantNoSQLDB[0].credentials.password;
-            dbCredentials.url = vcapServices.cloudantNoSQLDB[0].credentials.url;
-        }
-        console.log('VCAP Services: ' + JSON.stringify(process.env.VCAP_SERVICES));
-    }
-    cloudant = require('cloudant')(dbCredentials.url);
-    // check if DB exists if not create
-    cloudant.db.create(dbCredentials.dbName, function(err, res) {
-        if (err) {
-            console.log('could not create db ', err);
-        } else {
-            console.log('created DB');
-        }
-    });
-    db = cloudant.use(dbCredentials.dbName);
-}
-
-function initLocalConnection() {
-
-    var url = 'https://de8fd9c9-f5fc-4d91-86ac-4947783453f0-bluemix:c1f9266c89ff1bb2893b8d33463b58a82f3be09bec47da0558f656d47c48f8a8@de8fd9c9-f5fc-4d91-86ac-4947783453f0-bluemix.cloudant.com'
-        cloudant = require('cloudant')(url);
+function initDBConnection(url) {
+    cloudant = require('cloudant')(url);
     cloudant.db.create(dbCredentials.dbName, function(err, res) {
         if (err) {
             console.log('could not create db ', err);
@@ -115,7 +89,6 @@ var deleteAllItems = function(callback) {
 
 module.exports.db = db;
 module.exports.initDBConnection = initDBConnection;
-module.exports.initLocalConnection = initLocalConnection;
 module.exports.PriceFinderItem = PriceFinderItem;
 module.exports.saveItem = saveItem;
 module.exports.loadItems = loadItems;
