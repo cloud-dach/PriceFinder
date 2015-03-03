@@ -30,6 +30,7 @@ if (cfenv) {
       var service = appEnv.services[cloudantSvcName];
       var url = service[0].credentials.url;
       console.log(url);
+      // remove the following comment to enable Cloudant connection on Bluemix 
       //db.initDBConnection(url);
   }
   else
