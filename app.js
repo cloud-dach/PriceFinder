@@ -30,7 +30,7 @@ if (cfenv) {
       var service = appEnv.services[cloudantSvcName];
       var url = service[0].credentials.url;
       console.log(url);
-      db.initDBConnection(url);
+      //db.initDBConnection(url);
   }
   else
   {
@@ -56,7 +56,7 @@ if (cfenv) {
 else
 {
     console.log('Try direct connection to Cloudant DB');
-    var url = 'https://de8fd9c9-f5fc-4d91-86ac-4947783453f0-bluemix:c1f9266c89ff1bb2893b8d33463b58a82f3be09bec47da0558f656d47c48f8a8@de8fd9c9-f5fc-4d91-86ac-4947783453f0-bluemix.cloudant.com'
+    var url = 'https://your bluemix Cloudant URL';
     db.initDBConnection(url);	
 }
 
